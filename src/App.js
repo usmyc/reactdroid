@@ -1,23 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState } from "react";
+import Title from "./components/title";
+import Modal from "./components/modal";
+import EventList from "./components/EventList";
 
 function App() {
+  const [showModal, setShowModal] = useState(false);
+  const [showEvents, setShowEvents] = useState(true);
+  const [events, setEvents] = useState([
+    { title: "React", date: "2020-01-01", id: 1 },
+    { title: "Next", date: "2020-02-01", id: 2 },
+    { title: "Mendix", date: "2020-03-01", id: 3 },
+  ]);
+
+  const handleClick = (id) => {
+    setEvents((prev) => prev.filter((event) => event.id !== id));
+  };
+  const handleClose = <button onClick={()=> setShowModal(false)}>X</button>;
+
+  const subtitle = showEvents ? "Droid will got rise!" : "Droid will got die!";
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Title title="Events in Your Area" subtitle={subtitle} />
+
+      {showEvents && (
+        <div>
+          <button onClick={() => setShowEvents(false)}>hide event</button>
+        </div>
+      )}
+      {!showEvents && (
+        <div>
+          <button onClick={() => setShowEvents(true)}>show event</button>
+        </div>
+      )}
+
+      {showEvents && <EventList events={events} handleClick={handleClick} />
+        }
+      <button onClick={() => setShowModal(true)}>show modal</button>
+      {showModal && <Modal button={handleClose} />}
     </div>
   );
 }
