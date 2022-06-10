@@ -1,12 +1,14 @@
 import "./Modal.css";
-export default function Modal({ button, children, isTrue }) {
+export default function Modal({ children, isTrue }) {
   return (
     <div className="modal-backdrop">
       <div
         className="modal"
-        style={{ border: "4px solid",  borderColor: isTrue ? "blueviolet" : "black" }}
+        style={{
+          border: "4px solid",
+          borderColor: isTrue ? "blueviolet" : "black",
+        }}
       >
-        {button}
         <h2>Modal</h2>
         <img
           id="modal-img"

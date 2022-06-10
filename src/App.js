@@ -11,16 +11,16 @@ function App() {
   const [showModal, setShowModal] = useState(false);
   const [showEvents, setShowEvents] = useState(true);
   const [isTrue, setIsTrue] = useState(true);
-  const [events, setEvents] = useState([
-    { title: "React", date: "2020-01-01", id: 1 },
-    { title: "Next", date: "2020-02-01", id: 2 },
-    { title: "Mendix", date: "2020-03-01", id: 3 },
-  ]);
+  const [events, setEvents] = useState([]);
+
+  const addEvent = (event) => {
+    setEvents((prevEvents) => [...prevEvents, event]);
+  };
 
   const handleClick = (id) => {
     setEvents((prev) => prev.filter((event) => event.id !== id));
   };
-  const handleClose = <button onClick={() => setShowModal(false)}>X</button>;
+  // const handleClose = <button onClick={() => setShowModal(false)}>X</button>;
 
   const subtitle = showEvents ? "Droid will got rise!" : "Droid will got die!";
   return (
@@ -41,10 +41,10 @@ function App() {
       {showEvents && <EventList events={events} handleClick={handleClick} />}
       <button onClick={() => setShowModal(true)}>show modal</button>
       {showModal && (
-        <Modal button={handleClose} isTrue={isTrue}>
+        <Modal isTrue={isTrue}>
           <p>{""}</p>
-          <NewEventForm />
-          <button onClick={isTrue ? handleTrue : handleFalse}>Change</button>
+          <NewEventForm addEvent={addEvent} setShowModal={setShowModal} />
+          <button onClick={isTrue ? handleTrue : handleFalse}>Change Color</button>
         </Modal>
       )}
     </div>
